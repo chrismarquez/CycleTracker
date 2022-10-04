@@ -16,7 +16,13 @@ impl HelloService {
     }
 
     pub fn update_status(&self, item: &str) -> String {
-        todo!("If not there, update. If there, return")
+        let rep: &RefCell<HelloRepository> = self.repository.borrow();
+        if rep.exists(item.to_string()) {
+            item.to_string()
+        } else {
+            let cell = self.repository.borrow();
+            cell.borrow_mut().exists(item.to_string())
+        }
     }
 
 }
