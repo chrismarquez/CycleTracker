@@ -1,21 +1,24 @@
 use crate::repositories::hello_repository::Repository;
 
 pub struct HelloRepository {
-    // TODO: Fill
+    items: Vec<String>
 }
 
 impl HelloRepository {
 
     pub fn new() -> Self {
-        todo!("Fill")
+        Self {
+            items: Vec::new()
+        }
     }
 
-    pub fn add(&mut self, data: String) {
-        todo!("Fill")
+    pub fn add(&mut self, data: String) -> String {
+        self.items.push(data.clone());
+        data
     }
 
-    pub fn exists(&self) -> bool {
-        todo!("Fill")
+    pub fn exists(&self, data: String) -> bool {
+        self.items.contains(&data)
     }
 
 }

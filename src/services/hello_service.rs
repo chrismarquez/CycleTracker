@@ -1,14 +1,17 @@
-use std::borrow::Borrow;
+use std::borrow::{Borrow, BorrowMut};
+use std::cell::{Ref, RefCell};
+use std::rc::Rc;
+use std::sync::Arc;
 use crate::repositories::repository::HelloRepository;
 use crate::services::service::Service;
 
 pub struct HelloService {
-    repository: Box<HelloRepository>
+    repository: Arc<RefCell<HelloRepository>>
 }
 
 impl HelloService {
 
-    pub fn new(repository: Box<HelloRepository>) -> Self {
+    pub fn new(repository: Arc<RefCell<HelloRepository>>) -> Self {
         Self { repository }
     }
 

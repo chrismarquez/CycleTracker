@@ -1,3 +1,5 @@
+use std::cell::RefCell;
+use std::sync::Arc;
 use rocket::{Build, Rocket};
 use crate::controllers::controller::Controller;
 use crate::hello_controller::HelloController;
@@ -8,7 +10,7 @@ use crate::services::service::Service;
 fn get_services() -> Vec<impl Service> {
     vec!(
         HelloService::new(
-            Box::new(HelloRepository::new())
+            Arc::new(RefCell::new(HelloRepository::new()))
         )
     )
 }
