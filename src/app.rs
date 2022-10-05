@@ -4,13 +4,13 @@ use rocket::{Build, Rocket};
 use crate::controllers::controller::Controller;
 use crate::hello_controller::HelloController;
 use crate::HelloService;
-use crate::repositories::repository::HelloRepository;
+use crate::repositories::hello_repository::HelloRepository;
 use crate::services::service::Service;
 
 fn get_services() -> Vec<impl Service> {
     vec!(
         HelloService::new(
-            Arc::new(RefCell::new(HelloRepository::new()))
+            HelloRepository::new()
         )
     )
 }
