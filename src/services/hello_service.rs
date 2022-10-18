@@ -18,15 +18,19 @@ impl HelloService {
     }
 
     pub fn update_status(&self, item: &str) -> String {
-        let repo = self.repository.read()
-            .expect("Failed to read");
-        if repo.exists(item.to_string()) {
+        if self.is_cached(&item){   // is this good enough? can we handle this in a better way?
             item.to_string()
         } else {
             let mut repo = self.repository.write()
                 .expect("Failed to write");
             repo.add(item.to_string())
         }
+    }
+
+    fn is_cached(&self, item: &str) -> bool {
+        let repo = self.repository.read()
+            .expect("Failed to read");
+        repo.exists(item.to_string())
     }
 
 }
