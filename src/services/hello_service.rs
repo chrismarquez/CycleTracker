@@ -18,7 +18,7 @@ impl HelloService {
     }
 
     pub fn update_status(&self, item: &str) -> String {
-        if self.is_cached(&item){   // is this good enough? can we handle this in a better way?
+        if self.is_cached(&item) {   // is this good enough? can we handle this in a better way?
             item.to_string()
         } else {
             let mut repo = self.repository.write()
