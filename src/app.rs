@@ -1,35 +1,43 @@
-use std::cell::RefCell;
-use std::sync::Arc;
 use rocket::{Build, Rocket};
 use crate::controllers::controller::Controller;
+use crate::controllers::tracker_controller::TrackerController;
+
 use crate::hello_controller::HelloController;
 use crate::HelloService;
 use crate::repositories::hello_repository::HelloRepository;
-use crate::services::service::Service;
 
-fn get_services() -> Vec<impl Service> {
-    vec!(
-        HelloService::new(
-            HelloRepository::new()
-        )
-    )
+use crate::services::tracker_service::TrackerService;
+
+trait RocketApp<'t> {
+    fn manage_services(self) -> Rocket<Build>;
+    fn mount_controllers(self) -> Rocket<Build>;
+    fn mount_controller(self, controller: impl Controller<'t>) -> Rocket<Build>;
 }
 
-fn get_controllers<'t>() -> Vec<impl Controller<'t>> {
-    vec!(
-        HelloController::new()
-    )
+impl<'t> RocketApp<'t> for Rocket<Build> {
+    fn manage_services(self) -> Rocket<Build> {
+        self
+            .manage(
+                HelloService::new(
+                    HelloRepository::new()
+                )
+            )
+            .manage(TrackerService::new())
+    }
+
+    fn mount_controllers(self) -> Rocket<Build> {
+        self
+            .mount_controller(HelloController::new())
+            .mount_controller(TrackerController::new())
+    }
+
+    fn mount_controller(self, controller: impl Controller<'t>) -> Rocket<Build> {
+        self.mount(controller.get_base(), controller)
+    }
 }
 
 pub fn build_rocket() -> Rocket<Build> {
-    let builder = rocket::build();
-    let builder = get_services().into_iter()
-        .fold(builder, |b, service| {
-            b.manage(service)
-        });
-
-    get_controllers().into_iter()
-        .fold(builder, |b, controller| {
-            b.mount(controller.get_base(), controller)
-        })
+    rocket::build()
+        .manage_services()
+        .mount_controllers()
 }

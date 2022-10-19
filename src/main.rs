@@ -1,5 +1,5 @@
 
-use rocket::{main, uri};
+use rocket::{main};
 
 use models::response::Message;
 use controllers::hello_controller;
@@ -10,11 +10,13 @@ mod app;
 
 pub mod controllers {
     pub mod hello_controller;
+    pub mod tracker_controller;
     pub mod controller;
 }
 
 pub mod services {
     pub mod hello_service;
+    pub mod tracker_service;
     pub mod service;
 }
 
