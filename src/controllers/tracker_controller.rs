@@ -6,21 +6,19 @@ use crate::models::response::Tracker;
 use crate::services::tracker_service::TrackerService;
 
 pub struct TrackerController<'t> {
-    base: &'t str ,
-    routes: Vec<Route>
+    base: &'t str
 }
 
 impl<'t> TrackerController<'t> {
     pub fn new() -> Self {
         Self {
-            base: "/tracker",
-            routes: routes![get_tracker, get_all_tracker]
+            base: "/tracker"
         }
     }
 }
 
 impl<'t> Into<Vec<Route>> for TrackerController<'t> {
-    fn into(self) -> Vec<Route> { self.routes }
+    fn into(self) -> Vec<Route> { routes![get_tracker, get_all_tracker] }
 }
 
 impl<'t> Controller<'t> for TrackerController<'t> {

@@ -5,23 +5,19 @@ use crate::{HelloService, Message};
 use crate::controllers::controller::Controller;
 
 pub struct HelloController<'t> {
-    base: &'t str,
-    routes: Vec<Route>
+    base: &'t str
 }
 
 impl<'t> HelloController<'t> {
     pub fn new() -> Self {
         Self {
             base: "/hello",
-            routes: routes![index]
         }
     }
 }
 
 impl<'t> Into<Vec<Route>> for HelloController<'t> {
-    fn into(self) -> Vec<Route> {
-        self.routes
-    }
+    fn into(self) -> Vec<Route> { routes![index] }
 }
 
 impl<'t> Controller<'t> for HelloController<'t> {
