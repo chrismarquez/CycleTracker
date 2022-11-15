@@ -23,6 +23,7 @@ pub mod services {
 pub mod repositories {
     pub mod repository;
     pub mod hello_repository;
+    pub mod tracker_repository;
 }
 
 pub mod models {

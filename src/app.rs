@@ -5,6 +5,7 @@ use crate::controllers::tracker_controller::TrackerController;
 use crate::hello_controller::HelloController;
 use crate::HelloService;
 use crate::repositories::hello_repository::HelloRepository;
+use crate::repositories::tracker_repository::TrackerRepository;
 
 use crate::services::tracker_service::TrackerService;
 
@@ -22,7 +23,9 @@ impl<'t> RocketApp<'t> for Rocket<Build> {
                     HelloRepository::new()
                 )
             )
-            .manage(TrackerService::new())
+            .manage(TrackerService::new(
+                TrackerRepository::new()
+            ))
     }
 
     fn mount_controllers(self) -> Rocket<Build> {

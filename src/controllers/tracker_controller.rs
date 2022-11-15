@@ -1,4 +1,3 @@
-use std::os::unix::raw::time_t;
 use rocket::{get, Route, routes, State};
 use rocket::serde::json::Json;
 use crate::controllers::controller::Controller;
