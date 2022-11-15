@@ -21,7 +21,8 @@ impl TrackerService {
     }
 
     pub fn get_all_id(&self) -> Vec<u8> {
-        todo!()
+        let repo = self.repository.read().expect("ups all");
+        repo.get_all()
     }
 
 }
