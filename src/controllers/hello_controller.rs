@@ -4,24 +4,24 @@ use rocket::serde::json::Json;
 use crate::{HelloService, Message};
 use crate::controllers::controller::Controller;
 
-pub struct HelloController<'t> {
-    base: &'t str
+pub struct HelloController {
+    base: String
 }
 
-impl<'t> HelloController<'t> {
+impl HelloController {
     pub fn new() -> Self {
         Self {
-            base: "/hello",
+            base: "/hello".to_string(),
         }
     }
 }
 
-impl<'t> Into<Vec<Route>> for HelloController<'t> {
+impl Into<Vec<Route>> for HelloController {
     fn into(self) -> Vec<Route> { routes![index] }
 }
 
-impl<'t> Controller<'t> for HelloController<'t> {
-    fn get_base(&self) -> &'t str { self.base }
+impl Controller for HelloController {
+    fn get_base(&self) -> String { self.base.clone() }
 }
 
 #[get("/<item>")]

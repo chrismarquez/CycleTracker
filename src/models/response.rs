@@ -19,13 +19,18 @@ pub enum TrackerVersion {
 
 #[derive(Serialize, Deserialize)]
 pub struct Tracker {
-    id: u8,
+    id: i32,
     name: String,
     version: TrackerVersion
 }
 
+#[derive(Serialize, Deserialize)]
+pub struct ID {
+    pub id: i32
+}
+
 impl Tracker {
-    pub fn new(id: u8, name: String) -> Self {
+    pub fn new(id: i32, name: String) -> Self {
         Self { id, name, version: V1 }
     }
 }

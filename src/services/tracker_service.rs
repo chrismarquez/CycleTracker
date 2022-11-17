@@ -1,4 +1,4 @@
-use std::sync::RwLock;
+use tokio::sync::RwLock;
 use crate::models::response::Tracker;
 use crate::repositories::tracker_repository::TrackerRepository;
 use crate::services::service::Service;
@@ -6,6 +6,7 @@ use crate::services::service::Service;
 pub struct TrackerService {
     repository: RwLock<TrackerRepository>
 }
+
 
 impl TrackerService {
 
@@ -15,14 +16,14 @@ impl TrackerService {
         }
     }
 
-    pub fn get(&self, id: String) -> Option<Tracker> {
-        let repo = self.repository.read().expect("Ups");
-        repo.get(id)
+    pub async fn get(&self, id: i32) -> Option<Tracker> {
+        let repo = self.repository.read().await;
+        repo.get(id).await
     }
 
-    pub fn get_all_id(&self) -> Vec<u8> {
-        let repo = self.repository.read().expect("ups all");
-        repo.get_all()
+    pub async fn get_all_id(&self) -> Vec<i32> {
+        let repo = self.repository.read().await;
+        repo.get_all().await
     }
 
 }

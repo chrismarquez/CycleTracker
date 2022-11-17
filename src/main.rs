@@ -1,3 +1,4 @@
+extern crate core;
 
 use rocket::{main};
 
@@ -35,7 +36,7 @@ type RocketLaunch = Result<(), rocket::Error>;
 #[main]
 async fn main() -> RocketLaunch {
     println!("Hello, world!");
-    let rocket = build_rocket();
+    let rocket = build_rocket().await;
     let  _ = rocket.launch().await?;
     Ok(())
 }
