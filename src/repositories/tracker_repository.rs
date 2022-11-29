@@ -2,13 +2,14 @@ use std::error;
 use std::fmt;
 use std::fmt::{Debug, Display, Formatter};
 use crate::models::response::{Tracker, ID};
-use crate::repositories::repository::Repository;
+use crate::repositories::Repository;
 
 use mongodb::{Client, Collection, options::ClientOptions};
 use mongodb::bson::doc;
 use mongodb::error::{Error as MongoError, ErrorKind};
 use mongodb::options::FindOptions;
 use rocket::futures::TryStreamExt;
+use crate::provider::Component;
 use crate::repositories::tracker_repository::RepositoryError::NotFound;
 
 
@@ -44,7 +45,7 @@ impl From<MongoError> for RepositoryError {
 }
 
 impl TrackerRepository {
-    pub async fn new() -> Self {
+    pub(in crate::repositories) async fn new() -> Self {
         match TrackerRepository::_new().await {
             Ok(repo) => repo,
             Err(collection) => panic! { "{}", collection },
@@ -86,4 +87,5 @@ impl TrackerRepository {
     }
 }
 
+impl Component for TrackerRepository {}
 impl Repository for TrackerRepository {}

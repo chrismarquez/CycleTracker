@@ -1,31 +1,30 @@
+use std::sync::Arc;
 use tokio::sync::RwLock;
 use crate::models::response::Tracker;
-use crate::repositories::tracker_repository::TrackerRepository;
-use crate::services::service::Service;
+use crate::provider::Component;
+use crate::repositories::TrackerRepository;
+use crate::services::Service;
 
 pub struct TrackerService {
-    repository: RwLock<TrackerRepository>
+    repository: Arc<TrackerRepository>
 }
 
 
 impl TrackerService {
 
-    pub fn new(repository: TrackerRepository) -> Self {
-        Self {
-            repository: RwLock::new(repository)
-        }
+    pub(in crate::services) fn new(repository: Arc<TrackerRepository>) -> Self {
+        Self { repository }
     }
 
     pub async fn get(&self, id: i32) -> Option<Tracker> {
-        let repo = self.repository.read().await;
-        repo.get(id).await
+        self.repository.get(id).await
     }
 
     pub async fn get_all_id(&self) -> Vec<i32> {
-        let repo = self.repository.read().await;
-        repo.get_all().await
+        self.repository.get_all().await
     }
 
 }
 
+impl Component for TrackerService {}
 impl Service for TrackerService {}

@@ -1,13 +1,10 @@
 use rocket::{Build, Rocket, async_trait};
 use crate::controllers::controller::Controller;
 use crate::controllers::tracker_controller::TrackerController;
-
 use crate::hello_controller::HelloController;
-use crate::HelloService;
-use crate::repositories::hello_repository::HelloRepository;
-use crate::repositories::tracker_repository::TrackerRepository;
+use crate::provider::Provider;
 
-use crate::services::tracker_service::TrackerService;
+use crate::services::{HelloService, ServiceProvider as ServiceProvider, TrackerService};
 
 #[async_trait]
 trait RocketApp {
@@ -19,15 +16,10 @@ trait RocketApp {
 #[async_trait]
 impl RocketApp for Rocket<Build> {
     async fn manage_services(self) -> Rocket<Build> {
+        let mut service_provider = ServiceProvider::new().await;
         self
-            .manage(
-                HelloService::new(
-                    HelloRepository::new()
-                )
-            )
-            .manage(TrackerService::new(
-                TrackerRepository::new().await
-            ))
+            .manage(service_provider.get::<HelloService>())
+            .manage(service_provider.get::<TrackerService>())
     }
 
     fn mount_controllers(self) -> Rocket<Build> {

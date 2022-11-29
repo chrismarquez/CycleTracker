@@ -2,7 +2,8 @@ use rocket::{get, put, Route, routes, State};
 use rocket::serde::json::Json;
 use crate::controllers::controller::Controller;
 use crate::models::response::Tracker;
-use crate::services::tracker_service::TrackerService;
+use crate::services::TrackerService;
+
 
 pub struct TrackerController {
     base: String
