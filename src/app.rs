@@ -16,7 +16,7 @@ trait RocketApp {
 #[async_trait]
 impl RocketApp for Rocket<Build> {
     async fn manage_services(self) -> Rocket<Build> {
-        let mut service_provider = ServiceProvider::new().await;
+        let service_provider = ServiceProvider::new().await;
         self
             .manage(service_provider.get::<HelloService>())
             .manage(service_provider.get::<TrackerService>())

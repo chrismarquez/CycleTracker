@@ -1,9 +1,9 @@
-
-use rocket::{get, Route, routes, State};
+use rocket::{get, Route, routes};
 use rocket::serde::json::Json;
 use crate::services::HelloService;
 use crate::controllers::controller::Controller;
 use crate::Message;
+use crate::types::Managed;
 
 pub struct HelloController {
     base: String
@@ -26,7 +26,7 @@ impl Controller for HelloController {
 }
 
 #[get("/<item>")]
-async fn index(hello_service: &State<HelloService>, item: &str) -> Json<Message> {
+async fn index(hello_service: &Managed<HelloService>, item: &str) -> Json<Message> {
     let status = hello_service.update_status(item).await;
     let message = Message::new(status);
     Json(message)

@@ -1,19 +1,12 @@
-use std::any::{Any, TypeId};
-use std::borrow::Borrow;
+use std::any::{TypeId};
 use std::collections::HashMap;
-use std::ops::Deref;
 use std::sync::Arc;
-use downcast_rs::impl_downcast;
-use rocket::get;
-use crate::models::response::Tracker;
-use crate::provider;
 use crate::provider::{Component, Provider};
-use crate::repositories::{HelloRepository, RepositoryProvider as RepoProvider};
+use crate::repositories::RepositoryProvider;
 
 pub mod hello_service;
 pub mod tracker_service;
 
-impl_downcast!(sync Service);
 pub trait Service: Component {}
 
 #[derive(Clone)]
@@ -34,7 +27,7 @@ impl Provider for ServiceProvider {
 
 impl ServiceProvider {
     pub async fn new() -> Self {
-        let provider = RepoProvider::new().await;
+        let provider = RepositoryProvider::new().await;
         Self { set: HashMap::new() }
             .manage(HelloService::new(provider.get()))
             .manage(TrackerService::new(provider.get()))

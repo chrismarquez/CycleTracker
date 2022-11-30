@@ -17,6 +17,7 @@ pub mod controllers {
 pub mod services;
 pub mod repositories;
 pub mod provider;
+pub mod types;
 
 pub mod models {
     pub mod response;

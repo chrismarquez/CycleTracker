@@ -1,14 +1,10 @@
-use std::any::{Any, TypeId};
-use std::borrow::Borrow;
-use std::collections::HashMap;
+use std::any::{TypeId};
 use std::ops::Deref;
 use std::sync::Arc;
 use downcast_rs::{DowncastSync, impl_downcast};
-use crate::repositories::{HelloRepository, RepositoryProvider, Repository, TrackerRepository};
 
 impl_downcast!(sync Component);
 pub trait Component: DowncastSync {}
-
 
 pub trait Provider: Clone {
 

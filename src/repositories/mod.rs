@@ -1,16 +1,8 @@
-use std::any::{Any, TypeId};
+use std::any::{TypeId};
 use std::collections::HashMap;
 use std::sync::{Arc};
-use downcast_rs::{Downcast, DowncastSync, impl_downcast};
-use crate::provider;
 use crate::provider::{Component, Provider};
-use crate::services::{HelloService, Service, TrackerService};
-pub use self::{
-    hello_repository::HelloRepository,
-    tracker_repository::TrackerRepository
-};
 
-impl_downcast!(sync Repository);
 pub trait Repository: Component {}
 
 pub mod hello_repository;
@@ -39,3 +31,8 @@ impl RepositoryProvider {
             .manage(TrackerRepository::new().await)
     }
 }
+
+pub use self::{
+    hello_repository::HelloRepository,
+    tracker_repository::TrackerRepository
+};

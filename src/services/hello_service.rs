@@ -1,7 +1,4 @@
-use std::borrow::{Borrow, BorrowMut};
-use std::cell::{Ref, RefCell};
-use std::rc::Rc;
-use std::sync::{Arc, Mutex, RwLock};
+use std::sync::{Arc};
 use crate::provider::Component;
 use crate::repositories::HelloRepository;
 use crate::services::Service;
