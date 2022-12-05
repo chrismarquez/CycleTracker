@@ -17,7 +17,7 @@ impl TrackerController {
 }
 
 impl Into<Vec<Route>> for TrackerController {
-    fn into(self) -> Vec<Route> { routes![get_tracker, get_all_tracker] }
+    fn into(self) -> Vec<Route> { routes![get_tracker, get_all_tracker, create_tracker] }
 }
 
 impl Controller for TrackerController {
@@ -48,6 +48,10 @@ async fn create_tracker(
     tracker_service: &State<TrackerService>,
     tracker_id: i32,
     tracker: Json<Tracker>
-) -> Json<Tracker> {
-    todo!()
+) -> i32 {
+    let tracker = tracker_service.put(tracker_id, tracker).await;
+    match tracker {
+        Some(tracker_id) => tracker_id,
+        None => -1
+    }
 }

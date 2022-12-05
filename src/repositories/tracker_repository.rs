@@ -8,7 +8,9 @@ use mongodb::{Client, Collection, options::ClientOptions};
 use mongodb::bson::doc;
 use mongodb::error::{Error as MongoError, ErrorKind};
 use mongodb::options::FindOptions;
+use mongodb::results::InsertOneResult;
 use rocket::futures::TryStreamExt;
+use rocket::serde::json::Json;
 use crate::repositories::tracker_repository::RepositoryError::NotFound;
 
 
@@ -83,6 +85,13 @@ impl TrackerRepository {
             }
         }
         Vec::new()
+    }
+
+    pub async fn put(&self, id:i32, tracker: Json<Tracker>) -> Option<i32> {
+        if let Ok(result) =  self.collection.insert_one(tracker, None).await {
+            return result.inserted_id.as_i32()
+        }
+        None
     }
 }
 
