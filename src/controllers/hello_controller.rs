@@ -1,11 +1,10 @@
-
-use rocket::{get, Route, routes, State};
-use rocket::serde::json::Json;
-use crate::{HelloService, Message};
 use crate::controllers::controller::Controller;
+use crate::{HelloService, Message};
+use rocket::serde::json::Json;
+use rocket::{get, routes, Route, State};
 
 pub struct HelloController {
-    base: String
+    base: String,
 }
 
 impl HelloController {
@@ -17,11 +16,15 @@ impl HelloController {
 }
 
 impl Into<Vec<Route>> for HelloController {
-    fn into(self) -> Vec<Route> { routes![index] }
+    fn into(self) -> Vec<Route> {
+        routes![index]
+    }
 }
 
 impl Controller for HelloController {
-    fn get_base(&self) -> String { self.base.clone() }
+    fn get_base(&self) -> String {
+        self.base.clone()
+    }
 }
 
 #[get("/<item>")]

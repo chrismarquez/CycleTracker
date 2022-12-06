@@ -1,9 +1,9 @@
-use rocket::serde::{Serialize, Deserialize};
-use crate::models::response::TrackerVersion::V1;
+use crate::models::TrackerVersion;
+use rocket::serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
 pub struct Message {
-    status: String
+    status: String,
 }
 
 impl Message {
@@ -12,25 +12,39 @@ impl Message {
     }
 }
 
-#[derive(Serialize, Deserialize)]
-pub enum TrackerVersion {
-    V1
-}
 
 #[derive(Serialize, Deserialize)]
 pub struct Tracker {
-    id: i32,
-    name: String,
-    version: TrackerVersion
+    pub id: i32,
+    pub name: String,
+    pub version: TrackerVersion,
 }
 
 #[derive(Serialize, Deserialize)]
 pub struct ID {
-    pub id: i32
+    pub id: i32,
 }
 
+#[derive(Serialize, Deserialize)]
+pub struct Error {
+    pub message: String
+}
+
+
 impl Tracker {
-    pub fn new(id: i32, name: String) -> Self {
-        Self { id, name, version: V1 }
+    pub fn new(id: i32, name: String, version: TrackerVersion) -> Self {
+        Self {
+            id,
+            name,
+            version
+        }
+    }
+}
+
+impl Error {
+    pub fn new(message: String) -> Self {
+        Self {
+            message
+        }
     }
 }

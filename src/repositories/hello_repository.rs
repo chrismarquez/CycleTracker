@@ -1,15 +1,12 @@
 use crate::repositories::repository::Repository;
 
 pub struct HelloRepository {
-    items: Vec<String>
+    items: Vec<String>,
 }
 
 impl HelloRepository {
-
     pub fn new() -> Self {
-        Self {
-            items: Vec::new()
-        }
+        Self { items: Vec::new() }
     }
 
     pub fn add(&mut self, data: String) -> String {
@@ -20,7 +17,6 @@ impl HelloRepository {
     pub fn exists(&self, data: String) -> bool {
         self.items.contains(&data)
     }
-
 }
 
 impl Repository for HelloRepository {}
