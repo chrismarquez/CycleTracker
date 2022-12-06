@@ -87,7 +87,7 @@ impl TrackerRepository {
         Vec::new()
     }
 
-    pub async fn put(&self, id:i32, tracker: Json<Tracker>) -> Option<i32> {
+    pub async fn put(&self, id:i32, tracker: Tracker) -> Option<i32> {
         if let Ok(result) =  self.collection.insert_one(tracker, None).await {
             return result.inserted_id.as_i32()
         }

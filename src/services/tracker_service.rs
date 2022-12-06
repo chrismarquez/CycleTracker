@@ -27,7 +27,7 @@ impl TrackerService {
         repo.get_all().await
     }
 
-    pub async fn put(&self, id: i32, tracker: Json<Tracker> ) -> Option<i32>{
+    pub async fn put(&self, id: i32, tracker: Tracker ) -> Option<i32>{
         let repo = self.repository.write().await;
         repo.put(id, tracker).await
     }

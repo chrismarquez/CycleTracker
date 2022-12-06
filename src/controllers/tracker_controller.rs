@@ -1,7 +1,7 @@
 use rocket::{get, put, Route, routes, State};
 use rocket::serde::json::Json;
 use crate::controllers::controller::Controller;
-use crate::models::response::Tracker;
+use crate::models::response::{ID, Tracker};
 use crate::services::tracker_service::TrackerService;
 
 pub struct TrackerController {
@@ -48,10 +48,11 @@ async fn create_tracker(
     tracker_service: &State<TrackerService>,
     tracker_id: i32,
     tracker: Json<Tracker>
-) -> i32 {
-    let tracker = tracker_service.put(tracker_id, tracker).await;
+) -> Json<ID> {
+
+    let tracker = tracker_service.put(tracker_id, tracker.into_inner()).await;
     match tracker {
-        Some(tracker_id) => tracker_id,
-        None => -1
+        Some(tracker_id) => Json(ID{ id: tracker_id}),
+        None => Json(ID{ id: -1})
     }
 }
