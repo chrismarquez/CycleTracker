@@ -6,6 +6,7 @@ use downcast_rs::{DowncastSync, impl_downcast};
 impl_downcast!(sync Component);
 pub trait Component: DowncastSync {}
 
+/// Deprecated: Use AutoProvider instead.
 pub trait Provider: Clone {
 
     type ProviderImpl: Clone;
@@ -26,6 +27,6 @@ pub trait Provider: Clone {
                 return service.clone()
             }
         }
-        panic!("Service of type {} not found. Did you forget a manage() call", std::any::type_name::<U>())
+        panic!("Service of type {} not found. Did you forget a manage() call?", std::any::type_name::<U>())
     }
 }

@@ -1,26 +1,26 @@
-use std::any::{TypeId};
 use std::collections::HashMap;
-use std::sync::Arc;
-use crate::provider::{Component, Provider};
-use crate::repositories::RepositoryProvider;
+use provider::{AutoProvide};
+use crate::repositories::{AutoProvider as RepoAutoProvider, RepositoryProvider};
 
-pub mod hello_service;
-pub mod tracker_service;
+impl_downcast!(sync Service);
+pub trait Service: DowncastSync {}
 
-pub trait Service: Component {}
+mod hello_service;
+mod tracker_service;
 
-#[derive(Clone)]
+#[derive(AutoProvide, Clone)]
+#[component(Service)]
 pub struct ServiceProvider {
-    set: HashMap<TypeId, Arc<dyn Component>>
+    set: HashMap<TypeId, Arc<dyn Service>>
 }
 
-impl Provider for ServiceProvider {
+impl AutoProvider for ServiceProvider {
     type ProviderImpl = Self;
     fn identity(self) -> Self::ProviderImpl { self }
-    fn store<T: Component>(&mut self, key: TypeId, value: Arc<T>) {
+    fn store<T: Service>(&mut self, key: TypeId, value: Arc<T>) {
         self.set.insert(key, value);
     }
-    fn retrieve(&self, key: &TypeId) -> Option<&Arc<dyn Component>> {
+    fn retrieve(&self, key: &TypeId) -> Option<&Arc<dyn Service>> {
         self.set.get(key)
     }
 }

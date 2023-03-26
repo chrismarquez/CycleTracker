@@ -1,7 +1,5 @@
 use std::sync::Arc;
-use tokio::sync::RwLock;
 use crate::models::response::Tracker;
-use crate::provider::Component;
 use crate::repositories::TrackerRepository;
 use crate::services::Service;
 
@@ -26,5 +24,4 @@ impl TrackerService {
 
 }
 
-impl Component for TrackerService {}
 impl Service for TrackerService {}

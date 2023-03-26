@@ -9,7 +9,6 @@ use mongodb::bson::doc;
 use mongodb::error::{Error as MongoError, ErrorKind};
 use mongodb::options::FindOptions;
 use rocket::futures::TryStreamExt;
-use crate::provider::Component;
 use crate::repositories::tracker_repository::RepositoryError::NotFound;
 
 
@@ -87,5 +86,4 @@ impl TrackerRepository {
     }
 }
 
-impl Component for TrackerRepository {}
 impl Repository for TrackerRepository {}

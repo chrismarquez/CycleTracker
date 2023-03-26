@@ -9,6 +9,7 @@ dependencies = [
  "async-trait",
  "downcast-rs",
  "mongodb",
+ "provider",
  "rocket",
  "serde",
  "tokio",
@@ -1257,6 +1258,14 @@ dependencies = [
  "syn",
  "version_check",
  "yansi",
+]
+
+[[package]]
+name = "provider"
+version = "0.1.0"
+dependencies = [
+ "quote",
+ "syn",
 ]
 
 [[package]]

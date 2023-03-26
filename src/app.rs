@@ -2,9 +2,8 @@ use rocket::{Build, Rocket, async_trait};
 use crate::controllers::controller::Controller;
 use crate::controllers::tracker_controller::TrackerController;
 use crate::hello_controller::HelloController;
-use crate::provider::Provider;
 
-use crate::services::{HelloService, ServiceProvider as ServiceProvider, TrackerService};
+use crate::services::{AutoProvider as ServiceAP, HelloService, ServiceProvider, TrackerService};
 
 #[async_trait]
 trait RocketApp {

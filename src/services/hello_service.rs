@@ -1,5 +1,4 @@
 use std::sync::{Arc};
-use crate::provider::Component;
 use crate::repositories::HelloRepository;
 use crate::services::Service;
 
@@ -27,5 +26,4 @@ impl HelloService {
 
 }
 
-impl Component for HelloService {}
 impl Service for HelloService {}

@@ -1,5 +1,4 @@
 use tokio::sync::RwLock;
-use crate::provider::Component;
 use crate::repositories::Repository;
 
 pub struct HelloRepository {
@@ -27,5 +26,4 @@ impl HelloRepository {
 
 }
 
-impl Component for HelloRepository {}
 impl Repository for HelloRepository {}
