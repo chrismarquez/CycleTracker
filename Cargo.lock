@@ -9,7 +9,7 @@ dependencies = [
  "async-trait",
  "downcast-rs",
  "mongodb",
- "provider",
+ "provider-ioc",
  "rocket",
  "serde",
  "tokio",
@@ -1261,8 +1261,9 @@ dependencies = [
 ]
 
 [[package]]
-name = "provider"
-version = "0.1.0"
+name = "provider-ioc"
+version = "0.0.1"
+source = "git+https://github.com/chrismarquez/ProviderIoC#2fec158f2fdfc34cf1ff5e5e3135a9dfbde27ae1"
 dependencies = [
  "quote",
  "syn",

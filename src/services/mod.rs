@@ -1,5 +1,5 @@
 use std::collections::HashMap;
-use provider::{AutoProvide};
+use provider_ioc::{AutoProvide};
 use crate::repositories::{AutoProvider as RepoAutoProvider, RepositoryProvider};
 
 impl_downcast!(sync Service);

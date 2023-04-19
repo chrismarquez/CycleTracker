@@ -5,7 +5,7 @@ pub trait Repository: DowncastSync {}
 
 pub mod hello_repository;
 pub mod tracker_repository;
-use provider::{AutoProvide};
+use provider_ioc::{AutoProvide};
 use crate::repositories::{AutoProvider as X};
 
 #[derive(AutoProvide, Clone)]
