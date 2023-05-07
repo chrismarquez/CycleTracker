@@ -1,27 +1,30 @@
 # syntax=docker/dockerfile:1.3-labs
 FROM rust:1.69 as build
 LABEL authors="christopher & pug"
-ARG TARGET_PLATFORM=aarch64-apple-darwin
-COPY . .
-RUN --mount=type=cache,target=/usr/local/cargo/registry \
-    cargo build --release && \
-    mv ./target/release/CycleTracker .
+ARG CRATE_NAME=CycleTracker
 
-COPY . .
+# capture and compile dependencies on a blank project
+RUN cargo new ./app/${CRATE_NAME}
+COPY Cargo.lock Cargo.toml Rocket.toml ./app/${CRATE_NAME}/
 
+WORKDIR ./app/${CRATE_NAME}
+RUN --mount=type=cache,target=/usr/local/cargo/registry cargo build --release
+
+# now compile only the source code of our project
+COPY ./src ./src
 RUN --mount=type=cache,target=/usr/local/cargo/registry <<EOF
     set -e
-    touch /src/main.rs
+    touch /app/${CRATE_NAME}/src/main.rs
     cargo build --release
 EOF
 
 
 FROM debian:11-slim
+ARG CRATE_NAME=CycleTracker
 ENV ROCKET_PROFILE=staging
-COPY --from=build target/release/CycleTracker .
-COPY --from=build Rocket.toml .
+COPY --from=build app/${CRATE_NAME}/target/release/${CRATE_NAME} .
+COPY --from=build app/${CRATE_NAME}/Rocket.toml .
 CMD ["./CycleTracker"]
-
 
 # https://gist.github.com/noelbundick/6922d26667616e2ba5c3aff59f0824cd --> Caching for layers
 
@@ -34,3 +37,8 @@ CMD ["./CycleTracker"]
 #real    0m1.420s/1m32.781s
 #user    0m0.320s
 #sys     0m0.232s
+
+# V3 multistage build, now modifications only affect either dependencies or our project
+# we take about 1m17s to compile dependencies in case of Cargo.lock/toml, Dockerfile or Rocket.toml modifications
+# or about 16s (depends on size of project) to recompile CycleTracker source
+
