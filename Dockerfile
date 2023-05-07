@@ -20,7 +20,7 @@ EOF
 
 FROM debian:11-slim
 ARG CRATE_NAME=CycleTracker
-ENV ROCKET_PROFILE=staging
+ENV ROCKET_PROFILE=release
 COPY --from=build app/${CRATE_NAME}/target/release/${CRATE_NAME} .
 COPY --from=build app/${CRATE_NAME}/Rocket.toml .
 CMD ["./CycleTracker"]
