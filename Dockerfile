@@ -4,10 +4,9 @@ LABEL authors="christopher & pug"
 ARG CRATE_NAME=CycleTracker
 
 # capture and compile dependencies on a blank project
-RUN cargo new ./app/${CRATE_NAME}
-COPY Cargo.lock Cargo.toml Rocket.toml ./app/${CRATE_NAME}/
-
 WORKDIR ./app/${CRATE_NAME}
+RUN cargo init .
+COPY Cargo.lock Cargo.toml Rocket.toml ./
 RUN --mount=type=cache,target=/usr/local/cargo/registry cargo build --release
 
 # now compile only the source code of our project
