@@ -6,7 +6,6 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v3
-      # - run: docker build .
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v2
         with:
@@ -16,3 +15,13 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
+      - name: Build, tag, and push Docker Image to Amazon ECR
+        env:
+          ECR_REGISTRY: 512000475311.dkr.ecr.us-west-2.amazonaws.com
+          ECR_REPOSITORY: cycle-tracker
+          IMAGE_TAG: latest
+        run: |
+          docker build \
+          -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
