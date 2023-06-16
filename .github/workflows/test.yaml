@@ -1,0 +1,11 @@
+name: run tests
+on: [ workflow_dispatch ]
+jobs:
+  BuildAndPush:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+      - name: run tests
+        run: cargo test
+
