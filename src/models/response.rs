@@ -48,3 +48,16 @@ impl Error {
         }
     }
 }
+
+#[cfg(test)]
+mod test {
+    use super::*;
+    #[test]
+    fn create_tracker() {
+        let tracker_v1 = TrackerVersion::V1;
+        let test_tracker = Tracker::new(65535, "testing tracker name".to_string(), tracker_v1);
+        assert_eq!(test_tracker.id, 65535);
+        assert_eq!(test_tracker.name, "testing tracker name");
+        assert_eq!(test_tracker.version, TrackerVersion::V1);
+    }
+}
